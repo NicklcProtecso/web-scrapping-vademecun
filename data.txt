@@ -1,0 +1,33 @@
+name;presentation;price
+Prueba Rápida SARS-COV-2 Antigen Rapid Kit;CAJA 1 UN;S/ 21.00 S/ 18.00
+Panbio COVID-19 Antigen Self-Test;CAJA 1 UN;S/ 33.90 S/ 30.90
+Test Nasal SARS-CoV-2 Antigen Self;CAJA 5 UN;S/ 183.00 S/ 180.00
+Prueba Rápida SARS-COV-2 Antigen Saliva Rapid Kit;CAJA 1 UN;S/ 21.00 S/ 18.00
+Test 2019-NCOV Saliva Rapid Kit;UNIDAD 1 UN;S/ 30.50 S/ 27.50
+Mascarillas 3 Pliegues Family Doctor Color Negro - Caja 50 UN;CAJA 50 UN;NULL
+Mascarilla 3 Capas Kleenex;CAJA 10 UN;NULL
+Alcohol 100X 70% - Frasco 1000 ML;FRASCO 1000 ML;S/ 11.50 S/ 8.50
+Mascarilla KN95 Negra;CAJA 10 UN;S/ 12.90 S/ 9.90
+Mascarilla Desechable 3 Pliegues - Caja 50 UN;CAJA 50 UN;S/ 10.90 S/ 7.90
+Alcohol Puro 100X 96% - Frasco 1000 ml;FRASCO 1000 ML;S/ 11.50 S/ 8.50
+Vick Vaporub Ungüento tópico;POTE 100 G;S/ 16.60 S/ 13.60
+Bepanthen Crema Regeneradora;TUBO 30 G;S/ 22.90 S/ 19.90
+Enterogermina Suspensión Oral;CAJA 10 UN;S/ 36.50 S/ 33.50
+Panadol Antigripal NF Tableta;SOBRE X2 TABS 1 UN;S/ 5.19 S/ 2.19
+Panadol 100mg/ml Solución oral gotas;FRASCO 15 ML;S/ 18.30 S/ 15.30
+Panadol 160mg/5ml Jarabe;FRASCO 60 ML;S/ 17.70 S/ 14.70
+Aspirina 100mg Tableta;CAJA 100 UN;S/ 44.50 S/ 41.50
+Mascarilla KN95 Folding Mask - Caja 10 UN;CAJA 10 UN;NULL
+Vick Vaporub Ungüento tópico;POTE 50 G;S/ 11.00 S/ 8.00
+Gaseovet 80mg/ml Suspensión Gotas Sabor Fresa;FRASCO 15 ML;S/ 22.50 S/ 19.50
+Mascarilla KN95 DS Safety;CAJA 50 UN;NULL
+Bicarbonato de sodio 100g Polvo para Solución Oral;FRASCO 100 G;S/ 5.20 S/ 2.20
+Aci-Tip 800mg-60mg/10ml Suspensión - Frasco 200 ML;FRASCO 200 ML;S/ 28.50 S/ 25.50
+Abrilar Jarabe;FRASCO 100 ML;S/ 22.00 S/ 19.00
+Panadol Forte Tableta;SOBRE X2 TABS 1 UN;S/ 4.87 S/ 1.87
+Vick Vaporub Ungüento tópico;UNIDAD 1 UN;S/ 5.15 S/ 2.15
+Bismutol 87.33mg /5ml Suspensión Oral Sin Azúcar - Frasco 340 ML;FRASCO 340 ML;S/ 23.70 S/ 20.70
+Abrilar Jarabe;FRASCO 200 ML;S/ 37.90 S/ 34.90
+Doloral 100mg/5ml Suspensión Oral;FRASCO 60 ML;S/ 16.60 S/ 13.60
+Crema Regeneradora Bepanthen;TUBO 100 G;S/ 58.50 S/ 55.50
+Vick 44 Jarabe;FRASCO 120 ML;S/ 20.20 S/ 17.20
