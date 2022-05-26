@@ -1,96 +1,84 @@
 import { DataFrame } from "dataframe-js";
-const puppeteer = require("puppeteer");
-const fs = require("fs");
-const jsdom = require("jsdom");
+import { JSDOM } from "jsdom";
+import { GrupoTerapeuticoCf } from "./vademecum/grupo-terapeutico.config";
+import { IColumn, IConfig } from "./vademecum/interface";
+import { LaboratoriosConfig } from "./vademecum/laboratorios.config";
+import { MedicamentosConfig } from "./vademecum/medicamentos.config";
+import { PatologiasConfig } from "./vademecum/patologias.config";
+class ScraperVademecum {
+  config: IConfig;
 
-class Scraper {
-  url: string;
-  document: Document;
-  body: any;
-  data: any;
-  filename: string;
-
-  constructor(url: string, filename: string) {
-    this.url = url;
-    this.filename = filename;
+  constructor(config: IConfig) {
+    this.config = config;
   }
 
-  async getBodyFromUrl() {
-    const browser = await puppeteer.launch(); //{ headless: false, slowMo: 250 }
-    const page = await browser.newPage();
-    const response = await page.goto(this.url);
-    this.body = await response.text();
-    await browser.close();
+  getUrl(nameUrl, nroPage) {
+    return `https://pe.ivademecum.com/${nameUrl}_page-${nroPage}.html`;
   }
 
-  async setDocumentFromFile() {
-    const body = fs.readFileSync(this.filename, "utf8");
-    const {
-      window: { document },
-    } = new jsdom.JSDOM(body);
-    this.document = document;
-  }
-
-  saveBody() {
-    fs.writeFile(this.filename, this.body, function (err) {
-      if (err) throw err;
-      console.log(`File ${this.filename} is created successfully.`);
-    });
-  }
-
-  getInfoProduct() {
-    const products = this.document.querySelectorAll("fp-filtered-product-list");
-    let informations: NodeListOf<Element>;
-    products.forEach((info) => {
-      informations = info.querySelectorAll("fp-product-small");
-    });
+  async getDataFromUrl(url) {
     const data = [];
-    informations.forEach((info) => {
-      const name = this.getDataTrimQuerySelector(
-        info,
-        "fp-product-card-information fp-product-name"
-      );
-      const presentation = this.getDataTrimQuerySelector(
-        info,
-        "fp-product-card-information fp-product-description"
-      );
-      const price = this.getDataTrimQuerySelector(
-        info,
-        "fp-product-card-price fp-product-price"
-      );
-      const product = {
-        name,
-        presentation,
-        price,
-      };
-      data.push(product);
-    });
-    this.data = data;
-  }
-
-  getDataTrimQuerySelector(element: Element, selectors: string) {
     try {
-      const text = element.querySelector(selectors).textContent;
-      const name = text.replace(/\s+/g, " ").trim();
-      return name;
-    } catch (error) {
-      return "NULL";
+      const dom = await JSDOM.fromURL(url);
+      const { document } = dom.window;
+      const table = document.querySelector("table");
+      const thead = table.querySelector("thead");
+      const tbody = table.querySelector("tbody");
+      const trs = tbody.querySelectorAll("tr");
+      trs.forEach((tr) => {
+        const tds = tr.querySelectorAll("td");
+        const row = {};
+        this.config.columns.forEach((column) => {
+          row[column.name] = this.getItem(tds, column);
+        });
+        data.push(row);
+      });
+      return data;
+    } catch (err) {
+      console.log(err);
     }
   }
 
-  createDataFrame() {
-    const df = new DataFrame(this.data);
-    df.show();
-    df.toText(";", true, "data.txt");
+  getItem(tds: Element[], column: IColumn) {
+    const { index, type, tag } = column;
+    if (tag === "anchor") {
+      const a = tds[index].querySelector("a");
+      if (type === "href") {
+        return a.href;
+      } else if (type === "text") {
+        return a.textContent;
+      }
+    } else if (tag === "none") {
+      return tds[index].textContent;
+    }
+  }
+
+  async getDataFromAllPages() {
+    let dataAll = [];
+    for (let i = this.config.pageInit; i <= this.config.pageEnd; i++) {
+      const data = await this.getDataFromUrl(
+        this.getUrl(this.config.nameUrl, i)
+      );
+      dataAll = [...dataAll, ...data];
+    }
+    return dataAll;
+  }
+
+  toCsv(data, filename) {
+    const df = new DataFrame(data);
+    df.toText(";", true, `${filename}.csv`);
+  }
+
+  async urlToCsv() {
+    const data = await this.getDataFromAllPages();
+    this.toCsv(data, `assets/vademecum/${this.config.nameUrl}`);
   }
 }
 
 (async () => {
   try {
-    const scraper = new Scraper("", "web.html");
-    await scraper.setDocumentFromFile();
-    scraper.getInfoProduct();
-    scraper.createDataFrame();
+    const scraper = new ScraperVademecum(MedicamentosConfig);
+    await scraper.urlToCsv();
   } catch (e) {
     console.log(e);
   }

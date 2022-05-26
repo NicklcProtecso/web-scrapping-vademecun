@@ -40,10 +40,34 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from) {
         to[j] = from[i];
     return to;
 };
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 var dataframe_js_1 = require("dataframe-js");
 var jsdom_1 = require("jsdom");
-var medicamentos_config_1 = require("./vademecum/medicamentos.config");
+var ClasificacionTerapeutica = {
+    nameUrl: "clasificacion-terapeutica",
+    pageInit: 1,
+    pageEnd: 3,
+    columns: [
+        {
+            name: "code",
+            index: 0,
+            type: "text",
+            tag: "none",
+        },
+        {
+            name: "name",
+            index: 1,
+            type: "text",
+            tag: "anchor",
+        },
+        {
+            name: "url",
+            index: 1,
+            type: "href",
+            tag: "anchor",
+        },
+    ],
+};
 var ScraperVademecum = /** @class */ (function () {
     function ScraperVademecum(config) {
         this.config = config;
@@ -131,32 +155,19 @@ var ScraperVademecum = /** @class */ (function () {
         var df = new dataframe_js_1.DataFrame(data);
         df.toText(";", true, filename + ".csv");
     };
-    ScraperVademecum.prototype.urlToCsv = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var data;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getDataFromAllPages()];
-                    case 1:
-                        data = _a.sent();
-                        this.toCsv(data, "assets/vademecum/" + this.config.nameUrl);
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
     return ScraperVademecum;
 }());
 (function () { return __awaiter(void 0, void 0, void 0, function () {
-    var scraper, e_1;
+    var scraper, data, e_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                scraper = new ScraperVademecum(medicamentos_config_1.MedicamentosConfig);
-                return [4 /*yield*/, scraper.urlToCsv()];
+                scraper = new ScraperVademecum(ClasificacionTerapeutica);
+                return [4 /*yield*/, scraper.getDataFromAllPages()];
             case 1:
-                _a.sent();
+                data = _a.sent();
+                scraper.toCsv(data, "clasificacion-terapeutica");
                 return [3 /*break*/, 3];
             case 2:
                 e_1 = _a.sent();
@@ -166,3 +177,4 @@ var ScraperVademecum = /** @class */ (function () {
         }
     });
 }); })();
+//# sourceMappingURL=scraper.js.map
